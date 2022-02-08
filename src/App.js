@@ -40,6 +40,11 @@ function App() {
   const [randCol, setRandCol] = useState(COLORS.at(0));
   const [timer, setTimer] = useState(10);
 
+  /* TODO: 
+  - Working timer
+  - Succesful target click adds more time to timer
+  - When timer is at 0, game ends
+
   /*useEffect(() => {
     timer > 0 && setTimeout(() => setTimer(timer - 1), 1000);
   }, [timer])*/
