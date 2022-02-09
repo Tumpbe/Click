@@ -1,14 +1,19 @@
 import './App.css';
+import {zoomIn, tada} from 'react-animations'
 import { Target } from './components/Target';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import React, {useEffect, useState} from 'react';
 // Colors for Target component
 const COLORS = ['green', 'blue', 'grey','red', 'orange', 'turquoise', 'brown', 'palevioletred', 'darkblue', 'darkred'];
+
+const zoomAnimation = keyframes`${zoomIn}`
+const tadaAnimation = keyframes`${tada}`
 
 const Title = styled.h1`
   font-size: 8em;
   text-align: center;
   color: palevioletred;
+  text-shadow: 2px 2px black;
 `;
 
 const Background = styled.div`
@@ -25,12 +30,29 @@ const Timer = styled.div`
   color: palevioletred;
   margin-right: 70%;
   margin-top: -10%;
-`
-const Result = styled.div`
-  font-size: 3em;
+  text-shadow: 2px 2px black;
+`;
+
+const GameOver = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 300px;
+`;
+
+const Result = styled.h1`
+  color: orange;
+  animation: 3s ${zoomAnimation};
+  font-size: 4em;
+  text-shadow: 2px 2px black;
+`;
+
+const Failure = styled.div`
   color: brown;
-  margin: 200px;
-`
+  text-shadow: 2px 2px palevioletred;
+  animation: 1s ${tadaAnimation};
+  font-size: 3em;
+`;
 
 function App() {
   const [startClicked, setStartClicked] = useState(false);
@@ -71,7 +93,7 @@ function App() {
     randomPosition();
     // Every ten accurate clicks award 1 second
     if ((clickCount+1) % 10 === 0) {
-      setTimer(timer+2);
+      setTimer(timer+3);
     }
   }
 
@@ -87,7 +109,7 @@ function App() {
       setStartClicked(true)
       setMissClick(false);
       setClickCount(0);
-      setTimer(10);
+      setTimer(15);
 
       randomPosition();
       randomColor();
@@ -113,10 +135,16 @@ function App() {
         <Target handleClick={targetClick} randColor={randCol} position={randPos}></Target>
       }
       {missClick &&
-        <Result>Accurate clicks before missclick: {clickCount}</Result>
+        <GameOver>
+          <Failure>Missclick!</Failure>
+          <Result>Clicks: {clickCount}</Result>
+        </GameOver>
       }
       {timer === 0 &&
-        <Result>Accurate clicks before time ran out: {clickCount}</Result>
+        <GameOver>
+          <Failure>Time's up!</Failure>
+          <Result>Clicks: {clickCount}</Result>
+        </GameOver>
       }
     </Background>
   );
