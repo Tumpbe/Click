@@ -9,14 +9,14 @@ const Circle = styled.div`
   outline-style: solid;
 `;
 
-export const Target = ({ handleClick, randColor }) => {
+export const Target = ({ handleClick, randColor, position }) => {
 
   return (
     <Circle className="circle" onClick={(e) => handleClick(e)} 
       style={{
         "backgroundColor": randColor,
-        "marginLeft": (-90 + Math.floor(Math.random() * (90 - -90)))+'%',
-        "marginTop": (5 + Math.floor(Math.random() * (30 - 5)))+'%'
+        "marginLeft": (position.left)+'%',
+        "marginTop": (position.top)+'%'
       }}>     
     </Circle>
   )
